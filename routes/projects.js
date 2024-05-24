@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
 // PUT /projects/{id} - UPDATE an existing project by IO
 router.put("/:id", async (req, res) => {
   const project = await Project.findByIdAndUpdate(req.params.id, req.body, {
-    new: True,
+    new: true,
   });
   res.json(project);
 });

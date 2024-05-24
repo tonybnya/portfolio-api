@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
 // PUT /timeline/{id} - UPDATE an existing timeline by ID
 router.put("/:id", async (req, res) => {
   const timeline = await Timeline.findByIdAndUpdate(req.params.id, req.body, {
-    new: True,
+    new: true,
   });
   res.json(timeline);
 });
