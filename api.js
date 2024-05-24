@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-require(".env").config();
+require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,10 +11,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 // Connection to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URI);
 
 // Set routes
 app.use("/projects", require("./routes/projects"));
