@@ -16,13 +16,13 @@ router.get("/", async (req, res) => {
 });
 
 // GET /timeline/{id} - READ a specific timeline by ID
-router.get("/timeline/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const timeline = await Timeline.findById(req.params.id);
   req.json(timeline);
 });
 
 // PUT /timeline/{id} - UPDATE an existing timeline by ID
-router.put("/timeline/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   const timeline = await Timeline.findByIdAndUpdate(req.params.id, req.body, {
     new: True,
   });
@@ -30,7 +30,7 @@ router.put("/timeline/:id", async (req, res) => {
 });
 
 // DELETE /timeline/{id} - DELETE a specific timeline by ID
-router.delete("/timeline/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   await Timeline.findByIdAndDelete(req.params.id);
   res.json({ message: "Timeline deleted successfully!" });
 });
