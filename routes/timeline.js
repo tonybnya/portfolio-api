@@ -6,7 +6,7 @@ const Timeline = require("../models/Timeline");
 router.post("/", async (req, res) => {
   const timeline = new Timeline(req.body);
   await timeline.save();
-  res.json(project);
+  res.json(timeline);
 });
 
 // GET /timeline - READ all timeline entries
