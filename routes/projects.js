@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 // GET /projects/{id} - READ a specific project by ID
 router.get("/projects/:id", async (req, res) => {
   const project = await Project.findById(req.params.id);
-  req.json(project);
+  res.json(project);
 });
 
 // PUT /projects/{id} - UPDATE an existing project by IO
@@ -31,8 +31,8 @@ router.put("/projects/:id", async (req, res) => {
 
 // DELETE /projects{id} - DELETE a specific project by ID
 router.delete("/projects/:id", async (req, res) => {
-  const project = await Project.findByIdAndDelete(req.params.id);
-  req.json(project);
+  await Project.findByIdAndDelete(req.params.id);
+  res.json({ message: "Project deleted successfully!" });
 });
 
 module.exports = router;
