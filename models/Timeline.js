@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Create Schema/Model for my timeline
 const timelineSchema = new mongoose.Schema({
   year: Number,
   timeline: String,
