@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// Create Schema/Model for my timeline
+// Create Schema/Model for my projects
 const projectSchema = new mongoose.Schema({
   title: String,
   description: String,
