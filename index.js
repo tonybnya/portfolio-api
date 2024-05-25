@@ -59,6 +59,22 @@ app.put("/api/project/:id", async (req, res) => {
   }
 });
 
+// DELETE /api/project/{id} - DELETE a project by ID
+app.delete("/api/project/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await Project.findByIdAndDelete(id);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    res.status(200).json({ message: "Project deleted successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // POST /api/timelines - CREATE a new timeline (body: timeline data)
 app.post("/api/timelines", async (req, res) => {
   try {
@@ -102,6 +118,22 @@ app.put("/api/timeline/:id", async (req, res) => {
 
     const updatedTimeline = await Timeline.findById(id);
     res.status(200).json(updatedTimeline);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// DELETE /api/timeline/{id} - DELETE a timeline by ID
+app.delete("/api/timeline/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const timeline = await Timeline.findByIdAndDelete(id);
+
+    if (!timeline) {
+      return res.status(404).json({ message: "Timeline not found" });
+    }
+
+    res.status(200).json({ message: "Timeline deleted successfully!" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
