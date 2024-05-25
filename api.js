@@ -30,13 +30,16 @@ app.get("/", (req, res) => {
   res.send("Hello from API Server");
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
 
 // Connection to MongoDB
 mongoose
   // .connect(process.env.MONGO_URI)
   .connect(
-    "mongodb+srv://tonybnya:H9aDF582zVBzR7bp@portfoliodb.e3aqjx8.mongodb.net/Portfolio-API?retryWrites=true&w=majority&appName=PortfolioDB",
+    "mongodb+srv://tonybnya:H9aDF582zVBzR7bp@portfoliodb.e3aqjx8.mongodb.net/?retryWrites=true&w=majority&appName=PortfolioDB",
+    // "mongodb+srv://tonybnya:H9aDF582zVBzR7bp@portfoliodb.e3aqjx8.mongodb.net/Portfolio-API?retryWrites=true&w=majority&appName=PortfolioDB",
   )
   .then(() => {
     console.log("Connected to database!");
