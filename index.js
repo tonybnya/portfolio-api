@@ -21,11 +21,31 @@ app.post("/api/projects", async (req, res) => {
   }
 });
 
+// GET /api/projects - READ all projects
+app.get("/api/projects", async (req, res) => {
+  try {
+    const projects = await Project.find({});
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // POST /api/timelines - CREATE a new timeline (body: timeline data)
 app.post("/api/timelines", async (req, res) => {
   try {
     const timeline = await Timeline.create(req.body);
     res.status(200).json(timeline);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// GET /api/timelines - READ all timelines
+app.get("/api/timelines", async (req, res) => {
+  try {
+    const timelines = await Timeline.find({});
+    res.status(200).json(timelines);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
