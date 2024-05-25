@@ -31,6 +31,17 @@ app.get("/api/projects", async (req, res) => {
   }
 });
 
+// GET /api/projects/{id} - READ a specific project by ID
+app.get("/api/projects/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await Project.findById(id);
+    res.status(200).json(project);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // POST /api/timelines - CREATE a new timeline (body: timeline data)
 app.post("/api/timelines", async (req, res) => {
   try {
@@ -51,6 +62,16 @@ app.get("/api/timelines", async (req, res) => {
   }
 });
 
+// GET /api/timelines - READ a specific timeline by ID
+app.get("/api/timelines/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const timeline = await Timeline.findById(id);
+    res.status(200).json(timeline);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 // Start and listening to the server
 app.listen(3000, () => {
   console.log("Server running on port 3000");
