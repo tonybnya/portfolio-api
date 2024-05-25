@@ -31,8 +31,8 @@ app.get("/api/projects", async (req, res) => {
   }
 });
 
-// GET /api/projects/{id} - READ a specific project by ID
-app.get("/api/projects/:id", async (req, res) => {
+// GET /api/project/{id} - READ a specific project by ID
+app.get("/api/project/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const project = await Project.findById(id);
@@ -62,8 +62,8 @@ app.get("/api/timelines", async (req, res) => {
   }
 });
 
-// GET /api/timelines - READ a specific timeline by ID
-app.get("/api/timelines/:id", async (req, res) => {
+// GET /api/timeline/{id} - READ a specific timeline by ID
+app.get("/api/timeline/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const timeline = await Timeline.findById(id);
