@@ -1,6 +1,6 @@
 const Timeline = require("../models/timeline.model");
 
-// POST /api/timelines - CREATE a new timeline entry (body: timeline data)
+// POST /api/timelines - CREATE a new timeline entry (body: timeline entry data)
 const createSingleTimeline = async (req, res) => {
   try {
     const timeline = await Timeline.create(req.body);
