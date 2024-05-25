@@ -53,7 +53,7 @@ app.put("/api/project/:id", async (req, res) => {
     }
 
     const updatedProject = await Project.findById(id);
-    res.status(200).json(updatedProject);
+    res.status(201).json(updatedProject);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -75,7 +75,7 @@ app.delete("/api/project/:id", async (req, res) => {
   }
 });
 
-// POST /api/timelines - CREATE a new timeline (body: timeline data)
+// POST /api/timelines - CREATE a new timeline entry (body: timeline data)
 app.post("/api/timelines", async (req, res) => {
   try {
     const timeline = await Timeline.create(req.body);
@@ -85,7 +85,7 @@ app.post("/api/timelines", async (req, res) => {
   }
 });
 
-// GET /api/timelines - READ all timelines
+// GET /api/timelines - READ all timeline entries
 app.get("/api/timelines", async (req, res) => {
   try {
     const timelines = await Timeline.find({});
@@ -95,7 +95,7 @@ app.get("/api/timelines", async (req, res) => {
   }
 });
 
-// GET /api/timeline/{id} - READ a specific timeline by ID
+// GET /api/timeline/{id} - READ a specific timeline entry by ID
 app.get("/api/timeline/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -106,7 +106,7 @@ app.get("/api/timeline/:id", async (req, res) => {
   }
 });
 
-// PUT /api/timeline/{id} - UPDATE an existing timeline by ID (body: updated timeline data)
+// PUT /api/timeline/{id} - UPDATE an existing timeline entry by ID (body: updated timeline data)
 app.put("/api/timeline/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -117,13 +117,13 @@ app.put("/api/timeline/:id", async (req, res) => {
     }
 
     const updatedTimeline = await Timeline.findById(id);
-    res.status(200).json(updatedTimeline);
+    res.status(201).json(updatedTimeline);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// DELETE /api/timeline/{id} - DELETE a timeline by ID
+// DELETE /api/timeline/{id} - DELETE a timeline entry by ID
 app.delete("/api/timeline/:id", async (req, res) => {
   try {
     const { id } = req.params;
