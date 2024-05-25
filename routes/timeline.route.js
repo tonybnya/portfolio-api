@@ -1,38 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const Timeline = require("../models/Timeline");
 
-// POST /timeline - CREATE a new timeline entry (body: timeline entry data)
-router.post("/", async (req, res) => {
-  const timeline = new Timeline(req.body);
-  await timeline.save();
-  res.json(timeline);
-});
+const {
+  createSingleTimeline,
+  readAllTimelines,
+  readSingleTimeline,
+  updateSingleTimeline,
+  deleteSingleTimeline,
+} = require("../controllers/timeline.controller");
 
-// GET /timeline - READ all timeline entries
-router.get("/", async (req, res) => {
-  const timelines = await Timeline.find();
-  res.json(timelines);
-});
+// CREATE
+router.post("/", createSingleTimeline);
 
-// GET /timeline/{id} - READ a specific timeline by ID
-router.get("/:id", async (req, res) => {
-  const timeline = await Timeline.findById(req.params.id);
-  res.json(timeline);
-});
+// READ
+router.get("/", readAllTimelines);
+router.get("/:id", readSingleTimeline);
 
-// PUT /timeline/{id} - UPDATE an existing timeline by ID
-router.put("/:id", async (req, res) => {
-  const timeline = await Timeline.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  res.json(timeline);
-});
+// UPDATE
+router.put("/:id", updateSingleTimeline);
 
-// DELETE /timeline/{id} - DELETE a specific timeline by ID
-router.delete("/:id", async (req, res) => {
-  await Timeline.findByIdAndDelete(req.params.id);
-  res.json({ message: "Timeline deleted successfully!" });
-});
+// DELETE
+router.delete("/:id", deleteSingleTimeline);
 
 module.exports = router;
