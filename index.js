@@ -6,6 +6,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: false })); // Form URL Encoded
 
 app.get("/", (req, res) => {
   res.send("Hello from API Server");
