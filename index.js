@@ -42,6 +42,23 @@ app.get("/api/project/:id", async (req, res) => {
   }
 });
 
+// PUT /api/project/{id} - UPDATE an existing project by ID (body: updated project data)
+app.put("/api/project/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await Project.findByIdAndUpdate(id, req.body);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found." });
+    }
+
+    const updatedProject = await Project.findById(id);
+    res.status(200).json(updatedProject);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // POST /api/timelines - CREATE a new timeline (body: timeline data)
 app.post("/api/timelines", async (req, res) => {
   try {
@@ -72,6 +89,24 @@ app.get("/api/timeline/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+// PUT /api/timeline/{id} - UPDATE an existing timeline by ID (body: updated timeline data)
+app.put("/api/timeline/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const timeline = await Timeline.findByIdAndUpdate(id, req.body);
+
+    if (!timeline) {
+      return res.status(404).json({ message: "Timeline not found." });
+    }
+
+    const updatedTimeline = await Timeline.findById(id);
+    res.status(200).json(updatedTimeline);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Start and listening to the server
 app.listen(3000, () => {
   console.log("Server running on port 3000");
