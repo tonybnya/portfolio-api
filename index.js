@@ -5,7 +5,9 @@ const projectRoute = require("./routes/project.route");
 const timelineRoute = require("./routes/timeline.route");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const MONGO_URI =
+  "mongodb+srv://tonybnya:H9aDF582zVBzR7bp@portfoliodb.e3aqjx8.mongodb.net/Portfolio-API?retryWrites=true&w=majority&appName=PortfolioDB";
 
 // Middleware
 app.use(express.json());
@@ -21,16 +23,16 @@ app.get("/", (req, res) => {
 
 // Connection to MongoDB
 mongoose
-  .connect(
-    "mongodb+srv://tonybnya:H9aDF582zVBzR7bp@portfoliodb.e3aqjx8.mongodb.net/Portfolio-API?retryWrites=true&w=majority&appName=PortfolioDB",
-  )
+  .connect(MONGO_URI)
   .then(() => {
     console.log("Connected to database!");
     // Start and listening to the server
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
+    // app.listen(PORT, () => {
+    //   console.log(`Server running on port ${PORT}`);
+    // });
   })
-  .catch(() => {
-    console.log("Connection Failed!");
+  .catch((error) => {
+    console.error("Database connection failed!", error);
   });
+
+module.exports = app;
