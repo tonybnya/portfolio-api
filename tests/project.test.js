@@ -1,5 +1,6 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
+const data = require("../data.js");
 const app = require("../index");
 
 // Run each test individually: `npm run test project.test.js`
@@ -29,27 +30,28 @@ describe("Endpoints/Routes for API of the projects", () => {
 
   test("should READ/GET a specific project by ID", async () => {
     const id = "6652099f2f948ce315329243";
-    const title = "KaKo";
-    const description =
-      "Embark on a thrilling journey through the Batman universe with KaKo, an innovative e-commerce platform that brings the essence of Gotham City to your fingertips. Immerse yourself in a world where the iconic meets the extraordinary.";
-    const tags = ["React", "Tailwind", "Vite", "Flask"];
-    const images = [
-      "https://i.postimg.cc/ZqQNgHz4/kako-image-1.png",
-      "https://i.postimg.cc/KYjLJVV0/kako-image-2.png",
-    ];
-    const liveUrl = "https://kako-landing-page.onrender.com/";
-    const sourceUrl = "https://github.com/tonybnya/kako";
-
     const response = await request(app).get(`/api/projects/${id}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("_id", id);
-    expect(response.body).toHaveProperty("title", title);
-    expect(response.body).toHaveProperty("description", description);
-    expect(response.body).toHaveProperty("tags", tags);
-    expect(response.body).toHaveProperty("images", images);
-    expect(response.body).toHaveProperty("liveUrl", liveUrl);
-    expect(response.body).toHaveProperty("sourceUrl", sourceUrl);
+    expect(response.body).toHaveProperty("title", data["projects"][2]["title"]);
+    expect(response.body).toHaveProperty(
+      "description",
+      data["projects"][2]["description"],
+    );
+    expect(response.body).toHaveProperty("tags", data["projects"][2]["tags"]);
+    expect(response.body).toHaveProperty(
+      "images",
+      data["projects"][2]["images"],
+    );
+    expect(response.body).toHaveProperty(
+      "liveUrl",
+      data["projects"][2]["liveUrl"],
+    );
+    expect(response.body).toHaveProperty(
+      "sourceUrl",
+      data["projects"][2]["sourceUrl"],
+    );
   });
 
   test("should return 500 for a non-existing project", async () => {

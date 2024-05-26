@@ -1,5 +1,6 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
+const data = require("../data.js");
 const app = require("../index");
 
 // Run each test individually: `npm run test timeline.test.js`
@@ -27,22 +28,29 @@ describe("Endpoints/Routes for API of the timelines", () => {
     server.close();
   });
 
+  // test("should READ/GET all timelines", async () => {
+  //   const
+  // })
+
   test("should READ/GET a specific timeline entry by ID", async () => {
     const id = "66520a112f948ce315329247";
-    const year = 2008;
-    const timeline = "Bachelor's Degree - Computer Science";
-    const duration = "3 years";
-    const details =
-      "After completing my secondary education with a focus on Science and Mathematics, I went on to study Computer Science to earn a Bachelor's Degree at the Siantou Higher Institute of Technology in Yaounde, Cameroon. A rigorous 3-years coursework with practical exercises, and hands-on projects covering programming languages, algorithms and data structures, and software engineering. Through internships, research opportunities, and industry collaborations, I gained real-world experience and enhance my skills.";
-
     const response = await request(app).get(`/api/timelines/${id}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("_id", id);
-    expect(response.body).toHaveProperty("year", year);
-    expect(response.body).toHaveProperty("timeline", timeline);
-    expect(response.body).toHaveProperty("duration", duration);
-    expect(response.body).toHaveProperty("details", details);
+    expect(response.body).toHaveProperty("year", data["timelines"][7]["year"]);
+    expect(response.body).toHaveProperty(
+      "timeline",
+      data["timelines"][7]["timeline"],
+    );
+    expect(response.body).toHaveProperty(
+      "duration",
+      data["timelines"][7]["duration"],
+    );
+    expect(response.body).toHaveProperty(
+      "details",
+      data["timelines"][7]["details"],
+    );
   });
 
   test("should return 500 for a non-existing timeline", async () => {
