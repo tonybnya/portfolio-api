@@ -2,17 +2,21 @@ const request = require("supertest");
 const mongoose = require("mongoose");
 const app = require("../index");
 
+// Run each test individually: `npm run test project.test.js`
+
 const PORT = process.env.PORT || 3000;
 const MONGO_URI =
   "mongodb+srv://tonybnya:H9aDF582zVBzR7bp@portfoliodb.e3aqjx8.mongodb.net/Portfolio-API?retryWrites=true&w=majority&appName=PortfolioDB";
 
-describe("GET /api/projects/:id", () => {
+// describe("GET /api/projects/:id", () => {
+describe("Endpoints/Routes for API of the projects", () => {
   let server;
 
   beforeAll(async () => {
     // Connect to the MongoDB database
     await mongoose.connect(MONGO_URI);
-    // Store the server instance and start it
+    // In `index.js`, do not start the server
+    // Store the server instance and start it here
     server = app.listen(PORT);
   });
 
