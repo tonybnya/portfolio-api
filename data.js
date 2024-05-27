@@ -1,4 +1,9 @@
 const data = {
+  api: {
+    name: "Portfolio API",
+    projectsAPI: "http://localhost:3000/api/projects",
+    timelinesAPI: "http://localhost:3000/api/timelines",
+  },
   projects: [
     {
       title: "Developer Portfolio",

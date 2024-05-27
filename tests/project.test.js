@@ -1,3 +1,4 @@
+require("dotenv").config();
 const request = require("supertest");
 const mongoose = require("mongoose");
 const data = require("../data.js");
@@ -6,8 +7,7 @@ const app = require("../index");
 // Run each test individually: `npm run test project.test.js`
 
 const PORT = process.env.PORT || 3000;
-const MONGO_URI =
-  "mongodb+srv://tonybnya:H9aDF582zVBzR7bp@portfoliodb.e3aqjx8.mongodb.net/Portfolio-API?retryWrites=true&w=majority&appName=PortfolioDB";
+const MONGO_URI = process.env.MONGO_URI;
 
 // describe("GET /api/projects/:id", () => {
 describe("Endpoints/Routes for API of the projects", () => {
@@ -26,6 +26,22 @@ describe("Endpoints/Routes for API of the projects", () => {
     await mongoose.connection.close();
     // Stop the server
     server.close();
+  });
+
+  test("should return a greetings message from root endpoint '/'", async () => {
+    const message = "Hello from Portfolio API";
+    const response = await request(app).get("/");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("message", message);
+  });
+
+  test("should return JSON data from endpoint '/api'", async () => {
+    const api = data["api"];
+    const response = await request(app).get("/api");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("api", api);
   });
 
   test("should READ/GET a specific project by ID", async () => {

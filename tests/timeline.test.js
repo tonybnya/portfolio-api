@@ -1,3 +1,4 @@
+require("dotenv").config();
 const request = require("supertest");
 const mongoose = require("mongoose");
 const data = require("../data.js");
@@ -5,9 +6,8 @@ const app = require("../index");
 
 // Run each test individually: `npm run test timeline.test.js`
 
-const PORT = process.env.PORT || 3001;
-const MONGO_URI =
-  "mongodb+srv://tonybnya:H9aDF582zVBzR7bp@portfoliodb.e3aqjx8.mongodb.net/Portfolio-API?retryWrites=true&w=majority&appName=PortfolioDB";
+const PORT = process.env.PORT || 3000;
+const MONGO_URI = process.env.MONGO_URI;
 
 // describe("GET /api/timelines/:id", () => {
 describe("Endpoints/Routes for API of the timelines", () => {
@@ -28,9 +28,28 @@ describe("Endpoints/Routes for API of the timelines", () => {
     server.close();
   });
 
+  test("should return a greetings message from root endpoint /", async () => {
+    const message = "Hello from Portfolio API";
+    const response = await request(app).get("/");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("message", message);
+  });
+
+  test("should return JSON data from endpoint '/api'", async () => {
+    const api = data["api"];
+    const response = await request(app).get("/api");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("api", api);
+  });
+
   // test("should READ/GET all timelines", async () => {
-  //   const
-  // })
+  //   const response = await request(app).get("/api/timelines");
+
+  //   expect(response.status).toBe(200);
+  //   expect(response.length).toBe(data["timelines"].length);
+  // });
 
   test("should READ/GET a specific timeline entry by ID", async () => {
     const id = "66520a112f948ce315329247";
