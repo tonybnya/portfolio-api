@@ -21,7 +21,7 @@ const data = {
     {
       title: "Portfolio API",
       description:
-        "Building a CRUD API with Node.js, Express, and MongoDB to serve my Portfolio website with projects, and timelines (milestones or progression or steps as a Software Engineer) progressively.",
+        "Building a CRUD API with Node.js, Express, and MongoDB to serve my Developer Portfolio website with projects, and timelines (milestones or progression steps as Software Engineer) progressively.",
       tags: ["Express", "MongoDB", "Node.js"],
       images: [
         "https://i.postimg.cc/DzYxf1Lw/portfolio-api-image-1.png",
