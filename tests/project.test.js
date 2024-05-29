@@ -48,6 +48,15 @@ describe("Endpoints/Routes for API of the projects", () => {
     expect(response.body).toHaveProperty("timelinesAPI", api["timelinesAPI"]);
   });
 
+  test("should READ/GET all projects", async () => {
+    const response = await request(app).get("/api/projects");
+    const responseBodyLength = response.body.length;
+
+    expect(response.status).toBe(200);
+    expect(Array.isArray(response.body)).toBe(true);
+    expect(responseBodyLength).toBe(3);
+  });
+
   test("should READ/GET a specific project by ID", async () => {
     const id = "6657aaad36c711adaac6eae8";
     const response = await request(app).get(`/api/project/${id}`);
