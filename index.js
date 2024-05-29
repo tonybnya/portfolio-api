@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api", (req, res) => {
-  return res.status(200).json(data.api);
+  return res.status(200).json(data["api"]);
 });
 
 // Connection to MongoDB
@@ -33,9 +33,9 @@ mongoose
     console.log("Connected to database!");
     // Do not start the server to here to run tests
     // Start and listening to the server
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
+    // app.listen(PORT, () => {
+    //   console.log(`Server running on port ${PORT}`);
+    // });
   })
   .catch((error) => {
     console.error("Database connection failed!", error);

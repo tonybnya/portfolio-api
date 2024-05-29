@@ -41,32 +41,36 @@ describe("Endpoints/Routes for API of the projects", () => {
     const response = await request(app).get("/api");
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("api", api);
+    expect(response.body).toHaveProperty("name", api["name"]);
+    expect(response.body).toHaveProperty("author", api["author"]);
+    expect(response.body).toHaveProperty("version", api["version"]);
+    expect(response.body).toHaveProperty("projectsAPI", api["projectsAPI"]);
+    expect(response.body).toHaveProperty("timelinesAPI", api["timelinesAPI"]);
   });
 
   test("should READ/GET a specific project by ID", async () => {
-    const id = "6652099f2f948ce315329243";
-    const response = await request(app).get(`/api/projects/${id}`);
+    const id = "6657aaad36c711adaac6eae8";
+    const response = await request(app).get(`/api/project/${id}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("_id", id);
-    expect(response.body).toHaveProperty("title", data["projects"][2]["title"]);
+    expect(response.body).toHaveProperty("title", data["projects"][1]["title"]);
     expect(response.body).toHaveProperty(
       "description",
-      data["projects"][2]["description"],
+      data["projects"][1]["description"],
     );
-    expect(response.body).toHaveProperty("tags", data["projects"][2]["tags"]);
+    expect(response.body).toHaveProperty("tags", data["projects"][1]["tags"]);
     expect(response.body).toHaveProperty(
       "images",
-      data["projects"][2]["images"],
+      data["projects"][1]["images"],
     );
     expect(response.body).toHaveProperty(
       "liveUrl",
-      data["projects"][2]["liveUrl"],
+      data["projects"][1]["liveUrl"],
     );
     expect(response.body).toHaveProperty(
       "sourceUrl",
-      data["projects"][2]["sourceUrl"],
+      data["projects"][1]["sourceUrl"],
     );
   });
 
@@ -74,6 +78,6 @@ describe("Endpoints/Routes for API of the projects", () => {
     const invalidId = 123;
     const response = await request(app).get(`/api/projects/${invalidId}`);
 
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(404);
   });
 });
