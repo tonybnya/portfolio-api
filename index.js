@@ -15,19 +15,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // Form URL Encoded
 
 // Routes
-app.use("/api/projects", projectRoute);
-app.use("/api/timelines", timelineRoute);
+app.use("/api", projectRoute);
+app.use("/api", timelineRoute);
 
 app.get("/", (req, res) => {
   return res.status(200).json({ message: "Hello from Portfolio API" });
 });
 
 app.get("/api", (req, res) => {
-  return res.status(200).json({
-    name: data["api"]["name"],
-    projectsAPI: data["api"]["projectsAPI"],
-    timelines: data["api"]["timelinesAPI"],
-  });
+  return res.status(200).json(data.api);
 });
 
 // Connection to MongoDB

@@ -10,16 +10,16 @@ const {
 } = require("../controllers/project.controller");
 
 // CREATE
-router.post("/", createSingleProject);
+router.post("/projects", createSingleProject);
 
 // READ
-router.get("/", readAllProjects);
-router.get("/:id", readSingleProject);
+router.get("/projects", readAllProjects);
+router.get("/project/:id", readSingleProject);
 
 // UPDATE
-router.put("/:id", updateSingleProject);
+router.put("/project/:id", updateSingleProject);
 
 // DELETE
-router.delete("/:id", deleteSingleProject);
+router.delete("/project/:id", deleteSingleProject);
 
 module.exports = router;

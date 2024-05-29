@@ -10,16 +10,16 @@ const {
 } = require("../controllers/timeline.controller");
 
 // CREATE
-router.post("/", createSingleTimeline);
+router.post("/timelines", createSingleTimeline);
 
 // READ
-router.get("/", readAllTimelines);
-router.get("/:id", readSingleTimeline);
+router.get("/timelines", readAllTimelines);
+router.get("/timeline/:id", readSingleTimeline);
 
 // UPDATE
-router.put("/:id", updateSingleTimeline);
+router.put("/timeline/:id", updateSingleTimeline);
 
 // DELETE
-router.delete("/:id", deleteSingleTimeline);
+router.delete("/timeline/:id", deleteSingleTimeline);
 
 module.exports = router;
