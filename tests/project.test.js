@@ -54,7 +54,7 @@ describe("Endpoints/Routes for API of the projects", () => {
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
-    expect(responseBodyLength).toBe(3);
+    expect(responseBodyLength).toBe(data["projects"].length);
   });
 
   test("should READ/GET a specific project by ID", async () => {
