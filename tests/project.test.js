@@ -1,4 +1,5 @@
 require("dotenv").config();
+const Project = require("../models/project.model");
 const request = require("supertest");
 const mongoose = require("mongoose");
 const data = require("../data.js");
@@ -28,6 +29,13 @@ describe("Endpoints/Routes for API of the projects", () => {
     server.close();
   });
 
+  let len;
+
+  beforeEach(async () => {
+    // Get the current count of projects before each test
+    len = await Project.countDocuments({});
+  });
+
   test("should return a greetings message from root endpoint '/'", async () => {
     const message = "Hello from Portfolio API";
     const response = await request(app).get("/");
@@ -48,13 +56,37 @@ describe("Endpoints/Routes for API of the projects", () => {
     expect(response.body).toHaveProperty("timelinesAPI", api["timelinesAPI"]);
   });
 
+  test("should CREATE/POST a new project", async () => {
+    const project = {
+      title: "Fake project",
+      description: "Fake project description for testing",
+      tags: ["API", "JavaScript", "Jest", "Supertest"],
+      images: ["fakeImage1.png", "fakeImage2.png"],
+      liveUrl: "https://fakeprojectlive.com",
+      sourceUrl: "https://fakeprojectsource.com"
+    }
+    let response = await request(app)
+      .post("/api/projects")
+      .send(project);
+
+    expect(response.status).toBe(201);
+    
+    response = await request(app).get("/api/projects");
+    const responseBodyLength = response.body.length;
+
+    expect(Array.isArray(response.body)).toBe(true);
+    expect(len + 1).toBe(responseBodyLength);
+  })
+
+  len++;
+
   test("should READ/GET all projects", async () => {
     const response = await request(app).get("/api/projects");
     const responseBodyLength = response.body.length;
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
-    expect(responseBodyLength).toBe(data["projects"].length);
+    expect(responseBodyLength).toBe(len);
   });
 
   test("should READ/GET a specific project by ID", async () => {
@@ -83,10 +115,70 @@ describe("Endpoints/Routes for API of the projects", () => {
     );
   });
 
-  test("should return 500 for a non-existing project", async () => {
+  test("should return 404 for a non-existing project to READ/GET", async () => {
     const invalidId = 123;
     const response = await request(app).get(`/api/projects/${invalidId}`);
 
     expect(response.status).toBe(404);
+    expect(response.body).toBe({ "message": "Project not found"})
   });
+
+  test("should UPDATE/PUT an existing project", async () => {
+    const projectToUpdate = await Project.findOne({});
+    const id = projectToUpdate._id;
+    const updatedData = {
+      title: "Updated project title",
+      description: "Updated project description",
+      tags: ["Updated", "Tags"],
+      images: ["updatedImage1.png", "updatedImage2.png"],
+      liveUrl: "https://updatedprojectlive.com",
+      sourceUrl: "https://updatedprojectsource.com"
+    };
+
+    const response = await request(app)
+      .put(`/api/projects/${id}`)
+      .send(updatedData);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("_id", String(id));
+    expect(response.body).toHaveProperty("title", updatedData.title);
+    expect(response.body).toHaveProperty("description", updatedData.description);
+    expect(response.body).toHaveProperty("tags", updatedData.tags);
+    expect(response.body).toHaveProperty("images", updatedData.images);
+    expect(response.body).toHaveProperty("liveUrl", updatedData.liveUrl);
+    expect(response.body).toHaveProperty("sourceUrl", updatedData.sourceUrl);
+  });
+
+  test("should return 404 for a non-existing project to UPDATE/PUT", async () => {
+    const invalidId = 123;
+    const response = await request(app).put(`/api/projects/${invalidId}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body).toBe({ "message": "Project not found"})
+  })
+
+  test("should DELETE an existing project", async () => {
+    const projectToDelete = await Project.findOne({});
+    const id = projectToDelete._id;
+
+    const response = await request(app)
+      .delete(`/api/projects/${id}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toBe({ message: "Project deleted successfully!"});
+
+    const projectAfterDeletion = await Project.findById(id);
+    expect(projectAfterDeletion).toBeNull();
+
+    const newCount = await Project.countDocuments({});
+    expect(newCount).toBe(len - 1);
+  });
+
+  test("should return 404 for a non-existing project to DELETE", async () => {
+    const invalidId = 123;
+    const response = await request(app).delete(`/api/projects/${invalidId}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body).toBe({ "message": "Project not found"})
+  })
 });
