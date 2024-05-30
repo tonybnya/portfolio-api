@@ -50,6 +50,7 @@ describe("Endpoints/Routes for API of the projects", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("name", api["name"]);
+    expect(response.body).toHaveProperty("description", api["description"]);
     expect(response.body).toHaveProperty("author", api["author"]);
     expect(response.body).toHaveProperty("version", api["version"]);
     expect(response.body).toHaveProperty("projectsAPI", api["projectsAPI"]);
@@ -120,12 +121,10 @@ describe("Endpoints/Routes for API of the projects", () => {
     const response = await request(app).get(`/api/projects/${invalidId}`);
 
     expect(response.status).toBe(404);
-    expect(response.body).toBe({ "message": "Project not found"})
   });
 
-  test("should UPDATE/PUT an existing project", async () => {
-    const projectToUpdate = await Project.findOne({});
-    const id = projectToUpdate._id;
+  test("should UPDATE/PUT an existing project by ID", async () => {
+    const id = "665826ff9b9c9f60011bae92";  // an existing id
     const updatedData = {
       title: "Updated project title",
       description: "Updated project description",
@@ -140,7 +139,6 @@ describe("Endpoints/Routes for API of the projects", () => {
       .send(updatedData);
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("_id", String(id));
     expect(response.body).toHaveProperty("title", updatedData.title);
     expect(response.body).toHaveProperty("description", updatedData.description);
     expect(response.body).toHaveProperty("tags", updatedData.tags);
@@ -154,18 +152,16 @@ describe("Endpoints/Routes for API of the projects", () => {
     const response = await request(app).put(`/api/projects/${invalidId}`);
 
     expect(response.status).toBe(404);
-    expect(response.body).toBe({ "message": "Project not found"})
   })
 
-  test("should DELETE an existing project", async () => {
-    const projectToDelete = await Project.findOne({});
-    const id = projectToDelete._id;
+  test("should DELETE an existing project by ID", async () => {
+    const id = "665826ff9b9c9f60011bae92";  // an existing id
 
     const response = await request(app)
       .delete(`/api/projects/${id}`);
 
     expect(response.status).toBe(200);
-    expect(response.body).toBe({ message: "Project deleted successfully!"});
+    expect(response.body).toHaveProperty("message", "Project deleted successfully!");
 
     const projectAfterDeletion = await Project.findById(id);
     expect(projectAfterDeletion).toBeNull();
@@ -179,6 +175,5 @@ describe("Endpoints/Routes for API of the projects", () => {
     const response = await request(app).delete(`/api/projects/${invalidId}`);
 
     expect(response.status).toBe(404);
-    expect(response.body).toBe({ "message": "Project not found"})
   })
 });

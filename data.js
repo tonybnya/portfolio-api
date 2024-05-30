@@ -1,6 +1,7 @@
 const data = {
   api: {
     name: "Portfolio API",
+    description: "REST API for portfolio",
     author: "@tonybnya",
     version: "1.0.0",
     projectsAPI: "http://localhost:3000/api/projects",
