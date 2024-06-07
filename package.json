@@ -16,8 +16,8 @@
     "express": "^4.19.2",
     "mongodb": "^6.6.2",
     "mongoose": "^8.4.0",
-    "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0"
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",
