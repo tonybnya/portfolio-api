@@ -27,7 +27,7 @@ const readSingleProject = async (req, res) => {
     const project = await Project.findById(id);
 
     if (!project) {
-      return res.status(404).json({ message: "Project not found."});
+      return res.status(404).json({ message: "Project not found." });
     }
 
     res.status(200).json(project);

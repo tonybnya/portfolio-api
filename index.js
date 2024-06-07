@@ -3,6 +3,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const data = require("./data.js");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerOptions = require("./swaggerOptions.js");
+
 const projectRoute = require("./routes/project.route");
 const timelineRoute = require("./routes/timeline.route");
 
@@ -14,7 +18,11 @@ const MONGO_URI = process.env.MONGO_URI;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // Form URL Encoded
 
-// Routes
+// Swagger setup
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Routes/Endpoints for projects and timelines entries
 app.use("/api", projectRoute);
 app.use("/api", timelineRoute);
 
