@@ -67,7 +67,7 @@ router.get("/projects", readAllProjects);
  *             schema:
  *               $ref: '#/components/schemas/Project'
  */
-router.get("/project:id", readSingleProject);
+router.get("/project/:id", readSingleProject);
 
 /**
  * @swagger

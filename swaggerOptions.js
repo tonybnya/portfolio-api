@@ -1,4 +1,4 @@
-module.exports = {
+const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
@@ -12,6 +12,8 @@ module.exports = {
         description: "Local server",
       },
     ],
+    // apis: ["./routes/project.route.js", "./routes/timeline.route.js"],
+    apis: ["./routes/*.js"],
     components: {
       schemas: {
         Project: {
@@ -53,8 +55,35 @@ module.exports = {
             },
           },
         },
+        Timeline: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              description: "The auto-generated ID of the timeline",
+            },
+            year: {
+              type: "number",
+              description: "The year of the timeline/milestone",
+              default: "The current year",
+            },
+            timeline: {
+              type: "string",
+              description: "The title of the timeline",
+            },
+            duration: {
+              type: "string",
+              description: "The duration of the timeline",
+            },
+            details: {
+              type: "string",
+              description: "A detailed description of the timeline",
+            },
+          },
+        },
       },
     },
   },
-  apis: ["./routes/*.js"],
 };
+
+module.exports = swaggerOptions;
