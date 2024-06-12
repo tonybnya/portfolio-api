@@ -20,21 +20,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // Form URL Encoded
 app.use(cors());
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173", // Explicitly specify the allowed origin
-//     credentials: true, // Important for cookies, authorization headers with HTTPS
-//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-//     allowedHeaders: [
-//       "Origin",
-//       "Content-Type",
-//       "Accept",
-//       "Authorization",
-//       "X-Request-With",
-//     ],
-//   }),
-// );
-
 // Handle Cross-Origin Resource Sharing (CORS)
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
