@@ -35,6 +35,7 @@ app.use(cors());
 //   }),
 // );
 
+// Handle Cross-Origin Resource Sharing (CORS)
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
