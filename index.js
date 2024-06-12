@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const data = require("./data.js");
@@ -17,6 +18,35 @@ const MONGO_URI = process.env.MONGO_URI;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // Form URL Encoded
+app.use(cors());
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // Explicitly specify the allowed origin
+//     credentials: true, // Important for cookies, authorization headers with HTTPS
+//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+//     allowedHeaders: [
+//       "Origin",
+//       "Content-Type",
+//       "Accept",
+//       "Authorization",
+//       "X-Request-With",
+//     ],
+//   }),
+// );
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, HEAD, OPTIONS, POST, PUT, DELETE",
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+  );
+  next();
+});
 
 // Swagger setup
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
